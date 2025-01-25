@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#app-header {
+  /* transition: background-color 0.45s cubic-bezier(0.6, 0.6, 0, 1),
+      box-shadow 0.45s cubic-bezier(0.6, 0.6, 0, 1),
+      max-width 1s cubic-bezier(0.6, 0.6, 0, 1),
+      top 1s cubic-bezier(0.6, 0.6, 0, 1), padding 1s cubic-bezier(0.6, 0.6, 0, 1); */
+  transition: all 500ms ease-in-out;
+}
+
+#app-header.scrolled {
+  top: 10px !important;
+  max-width: 996px !important;
+  box-shadow:
+    0 0 2px #5f4a2e14,
+    0 3px 3px #5f4a2e0a,
+    0 5px 6px #5f4a2e0a,
+    0 20px 32px -12px #5f4a2e14;
+  border-radius: 10px;
+  padding: 15px 24px !important;
+}
+
+#app-header.scrolled .mobile-divider {
+  width: 0;
+}
+
+.mobile-divider {
+  width: 0;
+}
+
+#app-header.scrolled .logo-img {
+  position: relative;
+  width: 85px !important;
+}
+#app-header.scrolled .nav-wrapper::after {
+  content: "";
+  position: absolute;
+  left: -33px;
+  height: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  background: #00000050;
+}
+
+@media (max-width: 1024px) {
+  #app-header.scrolled .nav-wrapper::after {
+    left: -20px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  #app-header.scrolled {
+    padding: 8px 24px;
+  }
+  #app-header.scrolled .mobile-divider {
+    width: 2px;
+  }
+}
+
+.PhoneInputInput {
+  background: transparent !important;
+}
+.PhoneInputInput:active {
+  outline: none !important;
+  border: none !important;
+}
+.PhoneInputInput:focus {
+  outline: none !important;
+  border: none !important;
+}
+
+/* Primary Button  css */
+
+.bg-change {
+  background-size: 200% auto;
+  background-image: linear-gradient(to right, #451416d7 50%, #000401 50%);
+  cursor: pointer;
+  transition: background-position 0.7s ease-in-out;
+}
+
+.bg-change:hover {
+  background-position: -100% 0;
+  color: white;
+}
+
+/*  Single Text Gradient */
+.has-gradient {
+  background-color: #3c1313;
+  background-image: linear-gradient(62deg, #3c1313 0%, #d8aa51 100%);
+
+  /* background: linear-gradient(244.36deg, #5db4dd 0%, #9efc90 100%); */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ///////////  Contact Us button animation ///////////// */
+
+.bg-light {
+  background-size: 200% auto;
+  background-image: linear-gradient(to right, #ffffff 50%, #000401 50%);
+  cursor: pointer;
+  transition: all 0.7s ease-in-out;
+}
+
+.bg-light:hover {
+  color: white;
+  background-position: -100% 0;
+}
+
+/* Border Gradient  */
+
+.border-gradient-1 {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background-clip: padding-box;
+}
+
+.border-gradient-1::after {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  left: -2px;
+  right: -2px;
+  background: linear-gradient(223.85deg, #5cb9de 0%, #9ffd8e 98.07%);
+  content: "";
+  z-index: -1;
+  border-radius: 10px;
+}
+
+/*  Quotation Styling */
+
+.quote-wrapper::before {
+  content: "\201C";
+  font-size: 120px; /* Reduced font size for quote mark */
+  height: 30px;
+  line-height: 1;
+  position: absolute;
+  top: -50px;
+  left: -20px;
+  z-index: 1;
+  font-family: sans-serif, serif;
+  color: #ccc;
+  opacity: 0.9;
+}
+
+.quote-wrapper::after {
+  content: "\201C";
+  font-size: 120px; /* Reduced font size for quote mark */
+  height: 30px;
+  line-height: 1;
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  z-index: 1;
+  font-family: sans-serif, serif;
+  color: #ccc;
+  opacity: 0.9;
+}
+
+ul li::marker {
+  font-size: 1.2rem;
+  color: #89474b; /* Customize bullet color */
+}
