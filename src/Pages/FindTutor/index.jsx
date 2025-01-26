@@ -187,8 +187,10 @@ const FindTutor = () => {
           <div className="grid grid-cols-1 gap-y-6 ">
             {Array(4)
               ?.fill(4)
-              ?.map((item) => (
-                <Card />
+              ?.map((item, index) => (
+                <div key={index}>
+                  <Card />
+                </div>
               ))}
           </div>
         </div>

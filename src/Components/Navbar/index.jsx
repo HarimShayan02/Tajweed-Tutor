@@ -93,7 +93,7 @@ const Navbar = () => {
   return (
     <>
       <div
-        className={`fixed w-fit lg:w-full rounded-xl lg:rounded-[20px] top-2.5 max-w-[1200px] mr-[2px] sm:mr-0 md:px-3  py-[15px] flex z-40 items-center justify-end lg:justify-between bg-white right-3 md:right-5 lg:right-auto left-auto lg:left-[50%] lg:translate-x-[-50%] lg:transistion-all lg:duration-500 lg:ease-in-out`}
+        className={`fixed w-fit lg:w-full rounded-xl lg:rounded-[20px] top-2.5 max-w-[1200px] mr-[2px] sm:mr-0 md:px-3  py-[15px] flex z-40 items-center justify-end lg:justify-between bg-white  right-3 md:right-5 lg:right-auto left-auto lg:left-[50%] lg:translate-x-[-50%] lg:transistion-all lg:duration-500 lg:ease-in-out`}
         id="app-header"
       >
         <a
@@ -124,7 +124,7 @@ const Navbar = () => {
             ))}
           </div>
           <div className="hidden lg:block" ref={logindropdownRef}>
-            <div className="relative">
+            <div className="">
               <Button
                 svgIcon={<ArrowRightIcon className="w-3 h-3" />}
                 isBackgroundLight
