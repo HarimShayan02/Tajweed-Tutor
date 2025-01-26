@@ -8,9 +8,11 @@ const Layout = () => {
   const location = useLocation();
   return (
     <>
-      {location.pathname !== "/admin" && <Navbar />}
+      {location.pathname !== "/admin" ||
+        (location.pathname !== "/onBoarding" && <Navbar />)}
       <AppRoutes />
-      {location.pathname !== "/admin" && <Footar />}
+      {location.pathname !== "/admin" ||
+        (location.pathname !== "/onBoarding" && <Footar />)}
     </>
   );
 };

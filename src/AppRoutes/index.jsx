@@ -17,7 +17,7 @@ const AppRoutes = () => {
       <Route path="/tutor-list" element={<FindTutor />} />
       <Route path="/tutor-detail" element={<TutorDetail />} />
       <Route path="/become-tutor" element={<BecomeTutor />} />
-      <Route path="/onBoarding/:id" element={<OnBoarding />} />
+      <Route path="/onBoarding" element={<OnBoarding />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/about-us" element={<AboutUs />} />
     </Routes>

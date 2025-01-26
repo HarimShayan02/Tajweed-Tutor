@@ -2,13 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { AlignJustify, ArrowRightIcon, ChevronDown, X } from "lucide-react";
 import Button from "../../Elements/Button";
 import Signup from "../SignupModal";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const [activeSub, setActiveSub] = useState("");
   const [selectedNav, setSelectedNav] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const location = useLocation();
   const logindropdownRef = useRef(null);
   const [isSignupModal, setIsSignupModal] = useState(false);
   const navigate = useNavigate();
@@ -51,9 +52,9 @@ const Navbar = () => {
     },
   ];
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setIsDropdownOpen(!isDropdownOpen);
+  // };
 
   // const handleOptionSelect = (value) => {
   //   console.log("Selected:", value);
@@ -108,56 +109,17 @@ const Navbar = () => {
         <div className="flex items-center text-black">
           <div className="hidden lg:flex items-center relative space-x-12 nav-wrapper">
             {homeNavData.map((item, index) => (
-              <div
-                key={index}
-                className="relative group"
-                onMouseOver={() => {
-                  setActiveSub(item.label);
-                }}
-                onMouseLeave={() => setActiveSub("")}
-              >
-                <div className="flex items-center text-sm cursor-pointer group-hover:opacity-100 opacity-70 duration-300">
-                  {item.sub && <span className="mr-1">{item.label}</span>}
-                  {!item.sub && (
-                    <button
-                      className="mr-1"
-                      onClick={() => navigate(item.link)}
-                    >
-                      {item.label}
-                    </button>
-                  )}
-                  {item.sub && (
-                    <ChevronDown
-                      size={16}
-                      className="transform group-hover:translate-y-0.5 duration-300"
-                    />
-                  )}
-                </div>
-                {item.sub && (
-                  <div
-                    className={`pt-7 absolute left-0 transition-all duration-300 ${
-                      activeSub === item.label
-                        ? "visible opacity-100"
-                        : "invisible opacity-0"
-                    }`}
-                  >
-                    <div
-                      className={`bg-white rounded-md shadow-md min-w-40 px-2 py-2`}
-                    >
-                      {item.sub.map((sub, sKey) => (
-                        <button
-                          onClick={
-                            (() => navigate(item.link), setActiveSub(""))
-                          }
-                          className="block whitespace-nowrap px-4 py-3 text-sm bg-transparent hover:bg-[#00000010] cursor-pointer transition-all duration-300 rounded-lg"
-                          key={sKey}
-                        >
-                          {sub.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
+              <div key={index} className={`relative group `}>
+                <button
+                  className={`flex items-center text-sm cursor-pointer transition-colors duration-300 ${
+                    location.pathname === item.link
+                      ? "text-[#581e1e] font-semibold"
+                      : "text-black font-medium"
+                  }`}
+                  onClick={() => navigate(item.link)}
+                >
+                  {item.label}
+                </button>
               </div>
             ))}
           </div>
@@ -262,67 +224,17 @@ const Navbar = () => {
               key={key}
               className={`mobile-header-item ${toggleSidebar && "opened"}`}
             >
-              {item.sub ? (
-                <div
-                  className={`item-wrapper flex items-center justify-between p-4 rounded-[10px] ${
-                    selectedNav === item.label
-                      ? "bg-[#70451a12]"
-                      : "bg-transparent"
-                  } mb-2 hover:bg-[#70451a12] ${
-                    toggleSidebar
-                      ? "translate-x-0 translate-y-0 opacity-100 blur-0 opened"
-                      : "translate-y-[-30px] translate-x-[-30px] opacity-0 blur-[2px]"
-                  }`}
-                  onClick={() =>
-                    setSelectedNav((prev) =>
-                      prev === item.label ? "" : item.label,
-                    )
-                  }
-                >
-                  <span className="mr-1">{item.label}</span>
-                  <ChevronDown
-                    size={16}
-                    className={`transition-all duration-300 ${
-                      selectedNav === item.label ? "rotate-180" : "rotate-0"
-                    }`}
-                  />
-                </div>
-              ) : (
-                <a
-                  href={item.link}
-                  className={`item-wrapper flex items-center justify-between p-4 rounded-[10px] bg-transparent mb-2 hover:bg-[#70451a12] ${
-                    toggleSidebar
-                      ? "translate-x-0 translate-y-0 opacity-100 blur-0 opened"
-                      : "translate-y-[-30px] translate-x-[-30px] opacity-0 blur-[2px]"
-                  }`}
-                  onClick={() => setToggleSidebar(false)}
-                >
-                  <span className="mr-1">{item.label}</span>
-                </a>
-              )}
-              {item.sub && (
-                <div
-                  className={`transition-all duration-500 flex flex-col overflow-hidden`}
-                  style={{
-                    maxHeight:
-                      selectedNav === item.label
-                        ? item.sub.length * 56 + item.sub.length * 8
-                        : 0,
-                  }}
-                >
-                  {item.sub.map((sItem, sKey) => (
-                    <a
-                      href={sItem.link}
-                      target={sItem.target}
-                      key={sKey}
-                      className="rounded-[10px] h-14 bg-transparent mb-2 hover:bg-[#70451a12] flex items-center p-4"
-                      onClick={() => setToggleSidebar(false)}
-                    >
-                      {sItem.label}
-                    </a>
-                  ))}
-                </div>
-              )}
+              <a
+                href={item.link}
+                className={`item-wrapper flex items-center justify-between p-4 rounded-[10px] bg-transparent mb-2 hover:bg-[#70451a12] ${
+                  toggleSidebar
+                    ? "translate-x-0 translate-y-0 opacity-100 blur-0 opened"
+                    : "translate-y-[-30px] translate-x-[-30px] opacity-0 blur-[2px]"
+                }`}
+                onClick={() => setToggleSidebar(false)}
+              >
+                <span className="mr-1">{item.label}</span>
+              </a>
             </div>
           ))}
         </div>

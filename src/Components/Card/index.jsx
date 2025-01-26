@@ -62,8 +62,8 @@ const Card = ({
           <div className="flex  gap-2">
             {Array(3)
               .fill(3)
-              .map((item) => (
-                <div className="min-w-[100px] w-auto rounded-md">
+              .map((item, index) => (
+                <div className="min-w-[100px] w-auto rounded-md" key={index}>
                   <div className="flex items-center">
                     <span className="px-3 py-1 bg-[#e1e9ed] text-black text-xs rounded-l-md">
                       English

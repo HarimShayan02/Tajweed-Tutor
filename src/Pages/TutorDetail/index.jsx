@@ -209,7 +209,7 @@ const TutorDetail = () => {
               {Array(4)
                 .fill(4)
                 .map((item, index) => (
-                  <div className="flex flex-col gap-y-1">
+                  <div className="flex flex-col gap-y-1" key={index}>
                     <h5 className="font-semibold font-poppin text-base leading-[18px]">
                       Fazilat ( B.A in Islamic Studies)
                     </h5>
@@ -227,8 +227,8 @@ const TutorDetail = () => {
             <div className="mt-6 pl-2">
               {Array(3)
                 .fill(3)
-                .map((item) => (
-                  <div className="flex flex-col mb-6">
+                .map((item, index) => (
+                  <div className="flex flex-col mb-6" key={index}>
                     <h5 className="font-semibold font-poppin text-base leading-[18px]">
                       Basic Quran Reading & Islamic Teachings:
                     </h5>
