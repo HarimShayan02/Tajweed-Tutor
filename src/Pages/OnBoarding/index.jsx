@@ -67,9 +67,9 @@ const OnBoarding = () => {
         return;
       }
 
-      Success("Registered Successfully");
+      Success("Registered Successfully , Waiting for approval by the admin");
       setTutorData(tutorProfile);
-      navigate("/tutor-list");
+      navigate("/");
     } catch (error) {
       console.error("Unexpected error:", error);
     }
