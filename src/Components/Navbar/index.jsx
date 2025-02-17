@@ -74,7 +74,7 @@ const Navbar = () => {
         </a>
         <div className="flex items-center text-black">
           <div className="hidden lg:flex items-center relative space-x-12 nav-wrapper">
-            {homeNavData.map((item, index) => (
+            {homeNavData?.map((item, index) => (
               <div key={index} className={`relative group `}>
                 <button
                   className={`flex items-center text-sm cursor-pointer transition-colors duration-300 ${
@@ -216,7 +216,7 @@ const Navbar = () => {
           />
         </div>
         <div className={`py-5 px-2.5`}>
-          {homeNavData.map((item, key) => (
+          {homeNavData?.map((item, key) => (
             <div
               key={key}
               className={`mobile-header-item ${toggleSidebar && "opened"}`}

@@ -50,7 +50,7 @@ const AdminDashboard = () => {
 
       // Update the tutors state to reflect the changes
       setTutors((prevTutors) =>
-        prevTutors.map((tutor) =>
+        prevTutors?.map((tutor) =>
           tutor?.id === id
             ? { ...tutor, is_verified: true, is_approved: true }
             : tutor,

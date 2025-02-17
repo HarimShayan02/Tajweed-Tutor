@@ -278,7 +278,7 @@ const BecomeTutor = () => {
 
         <div className="mx-auto w-full max-w-[1180px]">
           <div className="grid grid-cols-3 gap-4">
-            {courses.map((item, index) => (
+            {courses?.map((item, index) => (
               <div className="max-w-xs " key={index}>
                 <div className="relative min-h-[344px] h-auto bg-[#efefef] border border-[#89474b] shadow-lg rounded-lg  p-5 overflow-hidden">
                   <svg
@@ -440,7 +440,7 @@ const BecomeTutor = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mt-10 px-6">
-            {getStarted.map((item, index) => (
+            {getStarted?.map((item, index) => (
               <div
                 key={index}
                 className="col-span-1 border border-gray-300 rounded-lg shadow-md p-5 flex flex-col items-center text-center bg-white"

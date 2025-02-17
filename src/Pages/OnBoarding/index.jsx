@@ -33,7 +33,7 @@ const OnBoarding = () => {
   const handleArrayChange = (arrayName, id, name, value) => {
     setTutorDetail((prev) => ({
       ...prev,
-      [arrayName]: prev[arrayName].map((item) =>
+      [arrayName]: prev[arrayName]?.map((item) =>
         item.id === id ? { ...item, [name]: value } : item,
       ),
     }));
@@ -49,7 +49,7 @@ const OnBoarding = () => {
   const removeFromArray = (arrayName, id) => {
     setTutorDetail((prev) => ({
       ...prev,
-      [arrayName]: prev[arrayName].filter((item) => item.id !== id),
+      [arrayName]: prev[arrayName]?.filter((item) => item.id !== id),
     }));
   };
 
@@ -177,7 +177,7 @@ const OnBoarding = () => {
                     Experience:
                   </h3>
 
-                  {tutorDetail.experience.map((exp) => (
+                  {tutorDetail?.experience?.map((exp) => (
                     <div key={exp.id} className="flex flex-col mb-6">
                       <Input
                         type="text"
@@ -270,7 +270,7 @@ const OnBoarding = () => {
                   <h3 className="font-semibold pb-2 text-xl font-poppin tracking-wide">
                     Subject:
                   </h3>
-                  {tutorDetail.subject.map((exp) => (
+                  {tutorDetail?.subject?.map((exp) => (
                     <div key={exp.id} className="flex flex-col mb-6">
                       <Input
                         type="text"
@@ -329,7 +329,7 @@ const OnBoarding = () => {
                   <h3 className="font-semibold pb-2 text-xl font-poppin tracking-wide">
                     Education:
                   </h3>
-                  {tutorDetail.education.map((exp) => (
+                  {tutorDetail?.education?.map((exp) => (
                     <div key={exp.id} className="flex flex-col mb-6">
                       <Input
                         type="text"
@@ -388,7 +388,7 @@ const OnBoarding = () => {
                   <h3 className="font-semibold pb-2 text-xl font-poppin tracking-wide">
                     Specialized:
                   </h3>
-                  {tutorDetail.specialized.map((exp) => (
+                  {tutorDetail?.specialized?.map((exp) => (
                     <div key={exp.id} className="flex flex-col mb-6">
                       <Input
                         type="text"
@@ -431,7 +431,7 @@ const OnBoarding = () => {
                   <h3 className="font-semibold pb-2 text-xl font-poppin tracking-wide">
                     Language:
                   </h3>
-                  {tutorDetail.language.map((exp) => (
+                  {tutorDetail?.language?.map((exp) => (
                     <div key={exp.id} className="flex flex-col mb-6">
                       <Input
                         type="text"

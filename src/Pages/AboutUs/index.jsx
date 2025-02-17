@@ -176,9 +176,9 @@ const AboutUs = () => {
 
           {/* Grid for points */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {points.map((column, columnIndex) => (
+            {points?.map((column, columnIndex) => (
               <div key={columnIndex}>
-                {column.map((point, pointIndex) => (
+                {column?.map((point, pointIndex) => (
                   <div
                     key={pointIndex}
                     className="flex items-start space-x-3 mb-4"
@@ -212,7 +212,7 @@ const AboutUs = () => {
             role="list"
             className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
           >
-            {people.map((person) => (
+            {people?.map((person) => (
               <li key={person.name}>
                 <img
                   alt=""

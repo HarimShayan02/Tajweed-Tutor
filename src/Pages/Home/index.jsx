@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Container from "../../Components/Container";
 import { CiLocationOn } from "react-icons/ci";
-import { FaStar } from "react-icons/fa";
 import Slider from "react-slick";
 import supabase from "../../supabase/supabaseClient";
 import { VscVerifiedFilled } from "react-icons/vsc";
@@ -38,57 +37,6 @@ const Home = () => {
       title: "Do you provide certificates upon course completion?",
       description:
         "Yes! Students who successfully complete their course and pass assessments receive an official certificate from Tajweed Tutors, verifying their learning achievements.",
-    },
-  ];
-
-  const tutors = [
-    {
-      name: "Ahmad Rufai Okuku",
-      rate: "£5 per hour",
-      description:
-        "I am a graduate of Sharee'ah Law, an Islaamic Caller and a teacher of Qur'aan...",
-      location: "NIGERIA",
-      reviews: 1,
-    },
-    {
-      name: "Zahida Shaheen",
-      rate: "£5 per hour",
-      description:
-        "I am Pakistan based Arabic instructor with 16 years of experience in hand. I have taug...",
-      location: "PAKISTAN",
-      reviews: 17,
-    },
-    {
-      name: "Hosain Ahmad Qasimee",
-      rate: "£5 per hour",
-      description:
-        "I'm Hosain Ahmad and I'm a well experienced online Quran tutor. I have...",
-      location: "BANGLADESH",
-      reviews: 5,
-    },
-    {
-      name: "Abdullah Siraajudeen",
-      rate: "£5 per hour",
-      description:
-        "My name is Abdullah Siraajudeen am from Nigeria i am online Quran teacher i teach...",
-      location: "NIGERIA",
-      reviews: 14,
-    },
-    {
-      name: "Ayyub Muhammad Salis",
-      rate: "£5 per hour",
-      description:
-        "Assalamu Alaikum warahmatullah, I am Ayyub Muhammad Salis a Hafeez of the...",
-      location: "NIGERIA",
-      reviews: 3,
-    },
-    {
-      name: "Nikmah Mawadati",
-      rate: "£5 per hour",
-      description:
-        "I'm Indonesian native, but studied Qur'an, Arabic and Islamic course in Azhar...",
-      location: "INDONESIA",
-      reviews: 0,
     },
   ];
 
@@ -403,8 +351,8 @@ const Home = () => {
 
           <div className="slider-container">
             <Slider {...settings}>
-              {tutor.map((item, index) => (
-                <div className="mt-8 pr-4 " key={index}>
+              {tutor?.map((item, index) => (
+                <div className="mt-8 pr-4 " key={item?.id}>
                   <div
                     style={{
                       backgroundImage: "url(assets/header-banner-bg.png)",
@@ -514,7 +462,7 @@ const Home = () => {
                 <div className="gap-8 ">
                   <div className="bg-white w-full border-t border-[#d9d9d9]">
                     <ul className="shadow-box">
-                      {faqItems.map((item, index) => (
+                      {faqItems?.map((item, index) => (
                         <li
                           key={index}
                           className="relative mb-2 rounded-lg border-b border-[#d9d9d9] bg-white"
