@@ -1,23 +1,10 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import React from "react";
 import Input from "../../Elements/Input";
 import Container from "../../Components/Container";
 import Button from "../../Elements/Button";
 import { ArrowRightIcon } from "lucide-react";
 
 const Contact = () => {
-  //   const [textInput, setTextInput] = useState<string>("");
-  //   const [phoneNumber, setPhoneNumber] = useState<string>("");
-
-  //   const handleTextChange = (value: string) => {
-  //     setTextInput(value);
-  //   };
-
-  //   const handlePhoneChange = (value: string) => {
-  //     console.log(value);
-  //     setPhoneNumber(value);
-  //   };
-
   return (
     <div className="h-full ">
       <div
@@ -35,27 +22,21 @@ const Contact = () => {
                 <Input
                   type="text"
                   placeholder="Your name"
-                  // onChange={handleTextChange}
-                  // value={textInput}
-                  className="border border-black focus:outline-none focus:border focus:border-[#924444] w-full rounded-md py-2 pl-3 text-sm leading-[24px]"
+                  className="border bg-transparent border-black focus:outline-none focus:border focus:border-[#924444] w-full rounded-md py-2 pl-3 text-sm leading-[24px]"
                 />
                 <Input
                   type="email"
                   placeholder="Your e-mail"
-                  className="border border-black  focus:outline-none focus:borderfocus:border-[#924444] w-full rounded-md py-2 pl-3 text-sm leading-[24px]"
-                  // onChange={handleTextChange}
-                  // value={textInput}
+                  className="border bg-transparent border-black  focus:outline-none focus:borderfocus:border-[#924444] w-full rounded-md py-2 pl-3 text-sm leading-[24px]"
                 />
                 <Input
                   type="number"
                   placeholder="Enter Phone Number"
-                  // onChange={handlePhoneChange}
-                  // value={phoneNumber}
-                  className="border border-black focus:outline-none focus:border focus:border-[#924444] w-full rounded-md py-2 pl-3 text-sm leading-[24px]"
+                  className="border bg-transparent border-black focus:outline-none focus:border focus:border-[#924444] w-full rounded-md py-2 pl-3 text-sm leading-[24px]"
                 />
 
                 <textarea
-                  className="border border-black  focus:outline-none focus:border focus:border-[#924444] w-full h-[164px] rounded-md py-2 pl-3 text-sm leading-[24px]"
+                  className="border bg-transparent border-black  focus:outline-none focus:border focus:border-[#924444] w-full h-[164px] rounded-md py-2 pl-3 text-sm leading-[24px]"
                   name=""
                   id=""
                   placeholder="Your message"
@@ -72,37 +53,38 @@ const Contact = () => {
               <div className="col-span-1 py-3">
                 <div className="flex flex-col space-y-4">
                   <h3 className="font-semibold font-poppin text-base leading-[18px]">
-                    Making Commitments the Right Way
+                    Commitment to Quality Learning
                   </h3>
                   <p className="font-poppin text-lightBlack text-sm leading-[20px] mb-2 sm:mb-0 md:mb-6">
-                    Gain first-hand real exposure into our teaching curriculum,
-                    meet with our certified tutors, and dive into our community
-                    for no cost at all! We cherish your time and want you to
-                    decide if Quran Teacher Live is the right place for you. We
-                    ensure a complete certification after every course.
+                    Experience our teaching curriculum firsthand, connect with
+                    our certified Tajweed tutors, and become part of our
+                    learning community all at no cost! We value your time and
+                    want you to feel confident that Tajweed Tutors is the right
+                    place for your Quranic journey. Upon completing a course,
+                    you’ll receive a certification of achievement.
                   </p>
                   <h3 className="font-semibold  font-poppin text-base leading-[18px]">
-                    Largest Pool of Tutors
+                    Connect with Expert Tutors
                   </h3>
                   <p className="font-poppin text-lightBlack text-sm leading-[20px] mb-2 sm:mb-0 md:mb-6">
-                    Register to study the Quran with our colony of expert tutors
-                    renowned for their professional teaching practices. Choose a
-                    tutor to match your learning goals.
+                    Register today and learn the Quran with our highly qualified
+                    Tajweed instructors, recognized for their expertise and
+                    effective teaching methods.
                   </p>
                   <h3 className="font-semibold  font-poppin text-base leading-[18px]">
-                    The Perfect Match
+                    Find Your Perfect Tutor
                   </h3>
                   <p className="font-poppin text-lightBlack text-sm leading-[20px] mb-2 sm:mb-0 md:mb-6">
-                    From background checks, to pupil reviews, pick your perfect
-                    tutor to match your learning needs.
+                    Browse through our verified tutors, check student reviews,
+                    and choose the one that best fits your learning goals.
                   </p>
                   <h3 className="font-semibold  font-poppin text-base leading-[18px]">
-                    Grow Profoundly
+                    Track Your Progress & Excel
                   </h3>
                   <p className="font-poppin text-lightBlack text-sm leading-[20px] mb-2 sm:mb-0 md:mb-6">
-                    Keeping track of your learning progress, reach your goals at
-                    your pace, and grow as your learning expands with the help
-                    of a Quran Tutor.
+                    With personalized lessons and regular feedback, achieve your
+                    learning milestones at your own pace. Grow spiritually and
+                    master Tajweed with the right guidance.
                   </p>
                 </div>
               </div>

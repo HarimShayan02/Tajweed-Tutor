@@ -1,17 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
-import { AlignJustify, ArrowRightIcon, ChevronDown, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { AlignJustify, ArrowRightIcon, X } from "lucide-react";
 import Button from "../../Elements/Button";
 import Signup from "../SignupModal";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import SignInModal from "../SignInModal";
+import { useGlobalContext } from "../../hook/Context";
 
 const Navbar = () => {
+  const { user, logout } = useGlobalContext();
   const [toggleSidebar, setToggleSidebar] = useState(false);
-  const [activeSub, setActiveSub] = useState("");
-  const [selectedNav, setSelectedNav] = useState("");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
-  const logindropdownRef = useRef(null);
   const [isSignupModal, setIsSignupModal] = useState(false);
+  const [isSigninModal, setIsSigninModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,48 +53,13 @@ const Navbar = () => {
     },
   ];
 
-  // const toggleDropdown = () => {
-  //   setIsDropdownOpen(!isDropdownOpen);
-  // };
-
-  // const handleOptionSelect = (value) => {
-  //   console.log("Selected:", value);
-  //   setIsDropdownOpen(false);
-  // };
-
-  // const handleOutsideClick = (event) => {
-  //   if (
-  //     logindropdownRef.current &&
-  //     !logindropdownRef.current.contains(event.target)
-  //   ) {
-  //     setIsDropdownOpen(false);
-  //   }
-  // };
-
-  // const handleScroll = () => {
-  //   setIsDropdownOpen(false);
-  // };
-
-  // useEffect(() => {
-  //   if (isDropdownOpen) {
-  //     document.addEventListener("click", handleOutsideClick);
-  //     document.addEventListener("scroll", handleScroll);
-  //   } else {
-  //     document.removeEventListener("click", handleOutsideClick);
-  //     document.removeEventListener("scroll", handleScroll);
-  //   }
-
-  //   // Cleanup event listeners on component unmount
-  //   return () => {
-  //     document.removeEventListener("click", handleOutsideClick);
-  //     document.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [isDropdownOpen]);
-
   return (
     <>
       <div
-        className={`fixed w-fit lg:w-full rounded-xl lg:rounded-[20px] top-2.5 max-w-[1200px] mr-[2px] sm:mr-0 md:px-3  py-[15px] flex z-40 items-center justify-end lg:justify-between bg-white  right-3 md:right-5 lg:right-auto left-auto lg:left-[50%] lg:translate-x-[-50%] lg:transistion-all lg:duration-500 lg:ease-in-out`}
+        style={{
+          boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
+        }}
+        className={`fixed  w-fit lg:w-full rounded-xl lg:rounded-[14px] top-2.5 max-w-[1200px] mr-[2px] sm:mr-0 md:px-3  py-[8px] flex z-40 items-center justify-end lg:justify-between bg-white  right-3 md:right-5 lg:right-auto left-auto lg:left-[50%] lg:translate-x-[-50%] lg:transistion-all lg:duration-500 lg:ease-in-out`}
         id="app-header"
       >
         <a
@@ -101,7 +67,7 @@ const Navbar = () => {
           href={"/"}
         >
           <img
-            src="/assets/quran_teacher_logo.png"
+            src="/assets/frame-logo.png"
             alt="logo"
             className="max-w-none object-contain .logo"
           />
@@ -123,45 +89,76 @@ const Navbar = () => {
               </div>
             ))}
           </div>
-          <div className="hidden lg:block" ref={logindropdownRef}>
-            <div className="">
-              <Button
-                svgIcon={<ArrowRightIcon className="w-3 h-3" />}
-                isBackgroundLight
-                className="h-[39px] text-sm lg:ml-4 px-5"
+          {}
+
+          {user && (user?.role === "student" || user?.role === "tutor") ? (
+            <Menu as="div" className="relative ml-6">
+              <div>
+                <MenuButton className="relative flex max-w-xs items-center rounded-full bg-white text-sm focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden">
+                  <span className="absolute -inset-1.5" />
+                  <span className="sr-only">Open user menu</span>
+                  <img
+                    alt=""
+                    src="https://st3.depositphotos.com/9998432/13335/v/600/depositphotos_133351928-stock-illustration-default-placeholder-man-and-woman.jpg"
+                    className="size-8 rounded-full"
+                  />
+                </MenuButton>
+              </div>
+              <MenuItems
+                transition
+                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
               >
-                Log in
-              </Button>
-              {/* <div
-                className={`absolute right-0 min-w-[130px] mt-0.5  bg-white border border-[#713333] shadow shadow-lg rounded-md transition-all duration-300 ${
-                  isDropdownOpen ? "opacity-100 " : "opacity-0 "
-                } overflow-hidden`}
-              >
-                <div
-                  className="px-4 py-2 font-normal cursor-pointer hover:bg-[#f7f7f7] hover:font-medium"
-                  onClick={() => handleOptionSelect("Tutor")}
+                {user?.role === "tutor" && (
+                  <MenuItem>
+                    <button
+                      onClick={() => navigate("/tutor-Dashboard")}
+                      className="block px-4 py-2 text-sm text-main font-semibold "
+                    >
+                      Dashboard
+                    </button>
+                  </MenuItem>
+                )}
+                <MenuItem>
+                  <h3 className="block px-4 py-2 text-sm text-black font-semibold italic">
+                    {user?.fullname} as {user?.role}
+                  </h3>
+                </MenuItem>
+                <MenuItem className={"w-full flex justify-start"}>
+                  <button
+                    onClick={logout}
+                    className=" px-4 py-2 text-sm text-gray-700  hover:bg-main hover:text-white"
+                  >
+                    Sign out
+                  </button>
+                </MenuItem>
+                {/* ))} */}
+              </MenuItems>
+            </Menu>
+          ) : (
+            <>
+              <div className="">
+                <Button
+                  svgIcon={<ArrowRightIcon className="w-3 h-3" />}
+                  isBackgroundLight
+                  className="h-[39px] text-sm lg:ml-4 px-5"
+                  onClick={() => setIsSigninModal(true)}
                 >
-                  Tutor
-                </div>
-                <div
-                  className="px-4 py-2 font-normal cursor-pointer hover:bg-[#f7f7f7] hover:font-medium"
-                  onClick={() => handleOptionSelect("Student")}
+                  Log in
+                </Button>
+              </div>
+
+              <div className="hidden lg:block">
+                <Button
+                  svgIcon={<ArrowRightIcon className="w-3 h-3" />}
+                  isPrimary
+                  className="h-[39px] text-sm lg:ml-4 px-5"
+                  onClick={() => setIsSignupModal(true)}
                 >
-                  Student
-                </div>
-              </div> */}
-            </div>
-          </div>
-          <div className="hidden lg:block">
-            <Button
-              svgIcon={<ArrowRightIcon className="w-3 h-3" />}
-              isPrimary
-              className="h-[39px] text-sm lg:ml-4 px-5"
-              onClick={() => setIsSignupModal(true)}
-            >
-              Sign up
-            </Button>
-          </div>
+                  Sign up
+                </Button>
+              </div>
+            </>
+          )}
         </div>
         {/* {userId ? (
           <div className="hidden lg:flex items-center text-black">
@@ -293,6 +290,11 @@ const Navbar = () => {
         onClick={() => setToggleSidebar(false)}
       ></div>
       <Signup isOpen={isSignupModal} setIsModalOpen={setIsSignupModal} />
+      <SignInModal
+        isOpen={isSigninModal}
+        setIsModalOpen={setIsSigninModal}
+        title={"Sign in as Tutor or Student"}
+      />
     </>
   );
 };

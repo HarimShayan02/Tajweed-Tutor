@@ -1,87 +1,43 @@
+/* eslint-disable jsx-a11y/heading-has-content */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useRef, useState } from "react";
 import Container from "../../Components/Container";
-import Button from "../../Elements/Button";
-import {
-  ArrowRightIcon,
-  GitPullRequestArrow,
-  Handshake,
-  Settings,
-  Smartphone,
-} from "lucide-react";
-import HomeCard from "../../Components/HomeCard";
 import { CiLocationOn } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
 import Slider from "react-slick";
+import supabase from "../../supabase/supabaseClient";
+import { VscVerifiedFilled } from "react-icons/vsc";
 
 const Home = () => {
   const containerRefs = useRef([]);
   const [selected, setSelected] = useState(0);
+  const [tutor, setTutor] = useState(null);
 
   const faqItems = [
     {
       title: "Is there a refund policy?",
       description:
-        "DreamSeat Enterprise Xperience Partners shall issue a full refund to any member who wishes to cancel their enrolment within 45 days prior to the start of the season. Stadium seat memberships are not refundable after the first home event of the football season. If a patron's seat is damaged or removed, DreamSeat EXP shall replace the item at no cost to the customer. Please contact the customer service hotline (864-626-9676) with any questions regarding the return policy. All sales are final. Refunds and adjustments will be considered on an individual basis.",
+        "Yes, Tajweed Tutors has a flexible refund policy to ensure a smooth experience for our students. If you are not satisfied after your first trial class, you can request a full refund.",
     },
     {
-      title: "Why Can't I log in?",
+      title: "Who can enroll in the courses?",
       description:
-        "If you are unable to log in, please make sure you have created a new account first. This ordering portal is different than the one where you purchase your Texas A&M game tickets.",
+        "Our courses are designed for students of all ages and levels—whether you're a beginner learning Noorani Qaida, an intermediate learner improving Tajweed, or an advanced student aiming to memorize the Quran (Hifz).",
     },
     {
-      title: "How fast can you expand the team?",
+      title: "How do online Quran classes work?",
       description:
-        "It depends on the number of candidates, their experience, etc. Usually, it takes 2-3 weeks. Our IT Staffing and recruitment services allow you to access our vast database and deep network of existing contacts in various industries and take advantage of our latest recruitment technologies.",
+        "Our online classes are conducted via Zoom, Skype, or other virtual platforms with one-on-one sessions or group lessons. Tutors use interactive whiteboards, screen sharing, and engaging exercises to enhance learning.",
     },
     {
-      title:
-        "How do you ensure the confidentiality and protection of my intellectual property?",
+      title: "How long does it take to complete a course?",
       description:
-        "We have stringent confidentiality agreements and security measures in place to ensure that your intellectual property is fully protected.",
+        "The duration of each course depends on the student's learning pace. Typically, the Quran Reading (Noorani Qaida & Basic Tajweed) course takes around 3 to 6 months. The Tajweed Rules & Quran Recitation course can take between 4 to 8 months. For Quran Memorization (Hifz Program), the duration varies—partial Hifz usually takes 6 to 12 months, while completing the full Hifz can take anywhere from 2 to 5 years.",
     },
     {
-      title: "What is the Discovery Phase?",
+      title: "Do you provide certificates upon course completion?",
       description:
-        "The Discovery Phase is an initial period where we gather all the necessary information about your project. This includes understanding your goals, requirements, and any potential challenges.",
-    },
-  ];
-
-  const HomeData = [
-    {
-      title: "Web Development",
-      icon: <Settings size={30} />,
-      description:
-        "Unlock the power of the web with our innovative web development services. We build responsive, user-friendly websites that drive engagement and enhance your online presence.",
-      learnMoreLink: "/services/web-development",
-    },
-    {
-      title: "Mobile Development",
-      icon: <Smartphone size={30} />, // Replace with actual icon path or data
-      description:
-        "Empower your business with custom mobile applications. Our mobile development services create intuitive, high-performance apps for iOS and Android, tailored to your needs and goals.",
-      learnMoreLink: "/services/mobile-development",
-    },
-    {
-      title: "IT Consulting and Digital Advisory",
-      icon: <GitPullRequestArrow size={30} />, // Replace with actual icon path or data
-      description:
-        "Transform your business with expert IT consulting and digital advisory. We provide strategic guidance to optimize technology investments and drive digital transformation for sustainable growth.",
-      learnMoreLink: "/services/it-consulting",
-    },
-    {
-      title: "Quality Assurance",
-      icon: <Handshake size={30} />, // Replace with actual icon path or data
-      description:
-        "Ensure flawless performance with our quality assurance services. We rigorously test your software to identify and resolve issues, guaranteeing a seamless user experience and optimal functionality.",
-      learnMoreLink: "/services/quality-assurance",
-    },
-    {
-      title: "Quality Assurance",
-      icon: <Handshake size={30} />, // Replace with actual icon path or data
-      description:
-        "Ensure flawless performance with our quality assurance services. We rigorously test your software to identify and resolve issues, guaranteeing a seamless user experience and optimal functionality.",
-      learnMoreLink: "/services/quality-assurance",
+        "Yes! Students who successfully complete their course and pass assessments receive an official certificate from Tajweed Tutors, verifying their learning achievements.",
     },
   ];
 
@@ -135,6 +91,43 @@ const Home = () => {
       reviews: 0,
     },
   ];
+
+  const courses = [
+    {
+      imgUrl: "/assets/reading.png",
+      description:
+        "A beginner-friendly course focusing on Arabic letters, pronunciation, and basic Tajweed rules through a structured step-by-step approach.",
+    },
+    {
+      imgUrl: "/assets/hifz.png",
+      description:
+        "Aimed at mastering Tajweed rules and improving Quranic recitation with one-on-one interactive sessions and personalized feedback.",
+    },
+    {
+      imgUrl: "/assets/tajweed.png",
+      description:
+        "A structured program for memorizing the Quran, guided by certified tutors with revision plans and regular assessments to track progress.",
+    },
+  ];
+
+  const getTutors = async () => {
+    try {
+      let { data: tutors, error } = await supabase.from("tutors").select("*");
+      if (error) {
+        console.error("", error.message);
+        return;
+      }
+
+      setTutor(tutors);
+    } catch (error) {
+      console.error("Unexpected error:", error);
+    } finally {
+    }
+  };
+
+  useEffect(() => {
+    getTutors();
+  }, []);
 
   var settings = {
     dots: true,
@@ -192,7 +185,7 @@ const Home = () => {
           <div className="w-full flex gap-8">
             <div className="w-[40%] flex items-center ">
               <h1 className="text-[42px] uppercase font-bold italic tracking-tight text-white leading-20 text-gray-900 ">
-                Learn Quran Online With Tajweed and Tafheem
+                Master the Art of Quran Recitation with Tajweed Tutors
               </h1>
             </div>
 
@@ -206,54 +199,6 @@ const Home = () => {
             </div>
           </div>
         </div>
-
-        {/* <div className="bg-white">
-          <div className="relative">
-            <div className="mx-auto max-w-7xl">
-              <div className="relative z-10 pt-14 lg:w-full lg:max-w-2xl">
-                <svg
-                  viewBox="0 0 100 100"
-                  preserveAspectRatio="none"
-                  aria-hidden="true"
-                  className="absolute inset-y-0 right-8 hidden h-full w-80 translate-x-1/2 transform fill-white lg:block"
-                >
-                  <polygon points="0,0 90,0 50,100 0,100" />
-                </svg>
-
-                <div className="relative px-6 py-32 sm:py-40 lg:px-8 lg:py-56 lg:pr-0">
-                  <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl">
-                    <h1 className=" text-3xl font-semibold tracking-tight leading-[24px] text-gray-900 sm:text-5xl">
-                      Reach your personal learning goals faster with the best
-                      Quran teachers from around the World.
-                    </h1>
-                    <p className="mt-8 text-lg font-medium text-gray-500 sm:text-xl/8">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Illo laboriosam sunt in. Temporibus alias doloremque
-                      deserunt, ad harum cumque magni odio incidunt error nisi
-                      dicta provident officiis sed autem nesciunt!
-                    </p>
-                    <div className="mt-10 flex items-center gap-x-6">
-                      <Button
-                        svgIcon={<ArrowRightIcon className="w-3 h-3" />}
-                        isPrimary
-                        className="h-[45px] text-base px-6"
-                      >
-                        Find a Tutor
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="bg-gray-50 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-              <img
-                alt=""
-                src="/assets/hero-header.jpg"
-                className="aspect-[3/2] object-cover lg:aspect-auto lg:size-full"
-              />
-            </div>
-          </div>
-        </div> */}
       </div>
       <div
         className="min-h-[100px] h-auto flex flex-col  justify-center items-center"
@@ -279,28 +224,34 @@ const Home = () => {
         <div className="max-w-[1180px] w-full mx-auto">
           <div className="flex flex-col ">
             <h2 className="font-semibold text-black text-[40px] ">
-              Learn and Read Quran Online
+              Learn and Read Quran Online with Expert Tajweed Tutors
             </h2>
-            <h3 className="font-normal text-[30px] text-[#89474b]">
-              with Tajweed at Quran Institute
-            </h3>
+            <h3 className="font-normal text-[30px] text-[#89474b]"></h3>
             <p className="text-base font-semibold italic text-lightBlack mt-2">
-              Tranquility and Satisfaction are the pivotal ingredients for a
-              healthy and productive mind.
+              Perfect Your Quran Recitation with Certified Instructors
             </p>
             <br />
             <p className="text-base font-medium  text-black max-w-[60%] ">
-              Being Muslims, it has been made clear around 1400 years ago, that
-              Islamic teachings are the only way to attain mental and physical
-              solace.
+              As Muslims, we know that the teachings of Islam provide the
+              ultimate source of inner peace and spiritual well-being.
             </p>
             <br />
             <p className="text-base font-medium text-black max-w-[90%]">
-              Today's world is full of turmoil, be it social be it political.
-              Parents are busy amassing piles of money for their kids' brilliant
-              future. Consequently, they find no time to spend some moments with
-              their kids. Also the moral and religious obligation to teach kids
-              the fundamentals of Noorani Qaida is on the verge of extinction.
+              In today’s fast-paced world, where social and political challenges
+              surround us, parents are often occupied with securing a bright
+              future for their children. Unfortunately, this leaves little time
+              to focus on their children's moral and religious education.
+              Learning the fundamentals of Tajweed and Quran recitation is
+              becoming increasingly neglected.
+              <br />
+              <br />
+              At Tajweed Tutors, we are committed to reviving this essential
+              practice by connecting students with expert tutors who ensure
+              correct pronunciation and beautiful recitation of the Quran.
+            </p>
+            <br />
+            <p className="text-base font-semibold italic text-Black mt-2">
+              Join us today and embark on a journey of Quranic excellence!
             </p>
           </div>
         </div>
@@ -331,21 +282,19 @@ const Home = () => {
         <div className="max-w-[1180px] w-full mx-auto">
           <div className="flex flex-col ">
             <h2 className="font-bold text-white text-[40px] text-center">
-              Online Quran Classes Easy and
+              Online Quran Classes Easy and Interactive Learning
             </h2>
-            <h3 className="font-normal text-center text-[30px] text-white">
-              Interactive Learning
-            </h3>
+            <h3 className="font-normal text-center text-[30px] text-white"></h3>
 
             <div className="grid grid-cols-2 mt-10 gap-6">
               <div className="col-span-1 flex flex-col justify-center">
                 <p className="text-white font-medium">
-                  The Quran Institute is such a platform, which makes it easy
-                  for you to Learn Quran Online. Considering the role of
-                  technology, we have decided to exploit various benefits of
-                  technology and have introduced Teaching Quran Online on Skype
-                  and we have collected the best Online Quran Teachers who are
-                  quite proficient in Tajweed Rules.
+                  Tajweed Tutors is a dedicated platform that makes learning the
+                  Quran online simple and effective. Embracing the power of
+                  technology, we provide one-on-one interactive Quran lessons
+                  through modern online tools like Skype and Zoom. Our team
+                  consists of highly qualified Quran tutors who specialize in
+                  Tajweed rules, ensuring proper pronunciation and recitation.
                 </p>
                 <br />
 
@@ -389,202 +338,58 @@ const Home = () => {
               </div>
               <div className="col-span-1 flex flex-col">
                 <i className=" text-black font-medium">
-                  Various questions come to mind when we talk about Learning
-                  Quran Online. We have already prepared a viable solution to
-                  each of your questions. All you need to do is to subscribe for
-                  the services you want on our website.
+                  When it comes to learning the Quran online, many questions
+                  arise. At Tajweed Tutors, we have crafted a simple and
+                  effective solution for every learner.
                 </i>
                 <br />
                 <p className="text-black font-medium">
-                  After subscription, you will find out how to learn Quran
-                  Online and how you are going to manage the daily routine
-                  tasks. Our Quran Classes Online, are a dawn of the new age as
-                  we have made a candid effort by narrowing the gap between the
-                  student and the teacher. Our software based products for Quran
-                  Reading and Quran Recitation have been developed with keen
-                  interest. There is no need for parents to eke out extra time
-                  for their kid's religious upbringing.
+                  Simply sign up for the course that suits your needs, and our
+                  expert Tajweed tutors will guide you through each step.
+                  Whether you’re a beginner or looking to refine your
+                  recitation, our structured lessons fit seamlessly into your
+                  daily routine.
                 </p>
                 <br />
                 <p className="text-black font-medium ">
-                  Just hand them a tablet with our apps running on them and you
-                  will see the change yourself. Keep in mind that there should
-                  be a specific time for the kid to use the gadget. Otherwise,
-                  kids are most likely to get addicted to such things.
+                  Our live, interactive Quran classes ensure personalized
+                  learning, making it as effective as traditional face-to-face
+                  lessons. With one-on-one guidance, real-time feedback, and
+                  expert instruction, students build confidence in their
+                  recitation skills.
+                </p>
+                <br />
+                <p className="text-black font-medium ">
+                  We leverage modern e-learning tools to make Quran reading and
+                  Tajweed learning more accessible. Parents no longer need to
+                  dedicate extra time to their child's religious education—just
+                  enroll them in our online classes, and let expert tutors take
+                  care of the rest.
+                </p>
+                <br />
+                <p className="text-black font-medium ">
+                  📌 Join Tajweed Tutors today and start your journey toward
+                  mastering Quran recitation with Tajweed!
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* <div
-        style={{
-          background:
-            "linear-gradient(255.21deg, rgba(92, 179, 222, 0.2) 0%, rgba(159, 253, 142, 0.2) 98.7%), #fff",
-        }}
-      >
-        <Container>
-          <div className="py-20 flex flex-col">
-            <h3 className="font-semibold text-[30px] md:text-[50px] font-poppin text-black  relative pl-2 z-10 uppercase">
-              <div
-                className="w-[34px] h-[34px] md:w-full md:h-full absolute top-0 md:-top-2 -left-2  "
-                style={{
-                  zIndex: -1,
-                }}
-              >
-                <img src={"/assets/heading-circle.svg"} alt={""} />
-              </div>
-              High quality personalised Quran tutoring
-            </h3>
-            <p className=" w-[90%] md:max-w-[450px] font-poppin leading-[22px] text-[13px] sm:text-[15px] text-lightBlack">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia
-              hic commodi, similique eos incidunt rerum voluptate sit pariatur
-              quas animi impedit aliquid quasi voluptates ex magni. Consectetur
-              id quaerat animi.
-            </p>
-
-            <div className="grid grid-cols-3 gap-5 mt-4">
-              {HomeData.map((item, index) => (
-                <div key={index} className="col-span-1">
-                  <HomeCard
-                    name={item?.title}
-                    description={item?.description}
-                    icon={item?.icon}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </Container>
-      </div>
-
-      <div className=" h-full py-[5rem]">
-        <Container>
-          <div className="flex flex-col">
-            <h3 className="font-semibold text-[30px] md:text-[50px] font-poppin text-black  relative pl-2 z-10 uppercase">
-              <div
-                className="w-[34px] h-[34px] md:w-full md:h-full absolute top-0 md:-top-2 -left-2  "
-                style={{
-                  zIndex: -1,
-                }}
-              >
-                <img src={"/assets/heading-circle.svg"} alt={""} />
-              </div>
-              It’s easy to get started
-            </h3>
-            <p className=" w-[90%] md:max-w-[450px] font-poppin leading-[22px] text-[13px] sm:text-[15px] text-lightBlack">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia
-              hic commodi, similique eos incidunt rerum voluptate sit pariatur
-              quas animi impedit aliquid quasi voluptates ex magni. Consectetur
-              id quaerat animi.
-            </p>
-            <div className="grid grid-cols-2 gap-6 w-full mt-8 py-4">
-              <div className="col-span-1 ">
-                <div className="">
-                  <div className="flex justify-center ">
-                    <div className="">
-                      <div className="">
-                        <div className="w-full ">
-                          <ul className="">
-                            {faqItems.map((item, index) => (
-                              <li
-                                key={index}
-                                className="relative border mb-2 rounded-lg  border-[#d9d9d9] bg-white"
-                              >
-                                <button
-                                  type="button"
-                                  className="w-full px-2 sm:py-4 py-2 text-left"
-                                  onClick={() =>
-                                    setSelected(
-                                      selected !== index + 1 ? index + 1 : 0,
-                                    )
-                                  }
-                                >
-                                  <div className="flex items-center justify-between hover:text-secondaryLight w-full ">
-                                    <span className="font-poppin text-sm sm:text-base font-medium w-[92%] lg:w-full ">
-                                      {item.title}
-                                    </span>
-                                    <div className="w-[8%] lg:w-auto">
-                                      <svg
-                                        className={`w-5 h-5 ${
-                                          selected === index + 1
-                                            ? "transform rotate-180"
-                                            : ""
-                                        }`}
-                                        fill="none"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        viewBox="0 0 30 30"
-                                        stroke="currentColor"
-                                      >
-                                        <path d="M19 9l-7 7-7-7"></path>
-                                      </svg>
-                                    </div>
-                                  </div>
-                                </button>
-                                <div
-                                  className="relative overflow-hidden transition-all max-h-0 duration-700"
-                                  style={{
-                                    maxHeight:
-                                      selected === index + 1 &&
-                                      containerRefs.current[index]?.scrollHeight
-                                        ? containerRefs.current[index]
-                                            .scrollHeight
-                                        : "0",
-                                  }}
-                                  ref={(el) => {
-                                    if (
-                                      el &&
-                                      !containerRefs.current.includes(el)
-                                    ) {
-                                      containerRefs.current.push(el);
-                                    }
-                                  }}
-                                >
-                                  <div className="px-2 pb-6 font-poppin text-[12px] leading-[18px] sm:text-sm sm:leading-[20px] md:text-[15px] md:leading-[24px] lg:text-base font-normal text-black">
-                                    <p>{item.description}</p>
-                                  </div>
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-span-1"> Image</div>
-            </div>
-            <h3 className="font-semibold text-center leading-normal text-[30px] md:text-[50px] font-poppin text-black capitalize relative pl-2 z-10 my-8 ">
-              Trusted, experienced and dedicated{" "}
-              <span className="text-secondary">Quran tutors</span>
-            </h3>
-            <div>
-              <h3 className="text-center">
-                "Verily the most superior amongst you ( Muslims ) are those who
-                learn the Quran and teach it."
-              </h3>
-            </div>
-          </div>
-        </Container>
-      </div> */}
 
       <div className=" bg-white py-20 relative">
         <div className="absolute right-0 top-0">
           <img
-            src="assets/flower-right-corner-image.png
-          "
+            src="assets/flower-right-corner-image.png"
             alt=""
+            className="object-cover w-[250px] h-[250px]"
           />
         </div>
         <div className="absolute left-0 top-0">
           <img
-            src="assets/flower-left-corner-image.png
-          "
+            src="assets/flower-left-corner-image.png"
             alt=""
+            className="object-cover w-[250px] h-[250px]"
           />
         </div>
         <Container>
@@ -598,7 +403,7 @@ const Home = () => {
 
           <div className="slider-container">
             <Slider {...settings}>
-              {tutors.map((item, index) => (
+              {tutor.map((item, index) => (
                 <div className="mt-8 pr-4 " key={index}>
                   <div
                     style={{
@@ -618,10 +423,18 @@ const Home = () => {
                       </div>
                       <div className="flex flex-col">
                         <h4 className="font-poppin font-medium leading-[22px] text-sm sm:text-base text-lightBlack ">
-                          {item?.rate}
+                          ${item?.payment} per hour
                         </h4>
-                        <h1 className="text-white font-semibold text-[17px]">
-                          {item?.name}
+                        <h1 className="text-white flex items-center gap-2  font-semibold text-[17px]">
+                          {item?.fullname}
+                          {item?.is_verified && (
+                            <p>
+                              <VscVerifiedFilled
+                                size={20}
+                                className="text-activePrimary"
+                              />
+                            </p>
+                          )}
                         </h1>
                       </div>
                     </div>
@@ -629,16 +442,10 @@ const Home = () => {
                       {item?.description}
                     </p>
                     <div className="flex gap-3">
-                      <div className="min-w-[100px] w-auto flex items-center justify-center gap-2 py-1 px-2 rounded-sm bg-lightGray">
+                      <div className="min-w-[80px] w-auto flex items-center justify-center gap-2 py-1 px-2 rounded-sm bg-lightGray">
                         <CiLocationOn />
                         <h3 className="text-base font-medium">
-                          {item?.location}
-                        </h3>
-                      </div>
-                      <div className="min-w-[100px] w-auto flex items-center justify-center gap-2 py-1 px-2 rounded-sm bg-lightGray text-[#f71e3f]">
-                        <FaStar />
-                        <h3 className="text-base font-medium">
-                          {item?.reviews} Review
+                          {item?.country}
                         </h3>
                       </div>
                     </div>
@@ -659,55 +466,32 @@ const Home = () => {
             Online Quran courses we offer
           </h2>
           <h3 className="font-normal text-center text-[26px] text-[#89474b]">
-            Quran Courses
+            Learn the Quran with Expert Tajweed Tutors – Personalized and
+            Interactive Lessons for All Ages.
           </h3>
-          {/* <h3 className="font-semibold text-[30px] md:text-[50px] font-poppin text-black  relative pl-2 z-10 uppercase">
-            <div
-              className="w-[34px] h-[34px] md:w-full md:h-full absolute top-0 md:-top-2 -left-2  "
-              style={{
-                zIndex: -1,
-              }}
-            >
-              <img src={"/assets/heading-circle.svg"} alt={""} />
-            </div>
-            Online Quran courses we offer
-          </h3>
-          <p className=" w-[90%] md:max-w-[450px] font-poppin leading-[22px] text-[13px] sm:text-[15px] text-lightBlack">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia
-            hic commodi, similique eos incidunt rerum voluptate sit pariatur
-            quas animi impedit aliquid quasi voluptates ex magni. Consectetur id
-            quaerat animi.
-          </p> */}
 
           <div className="grid grid-cols-3 ">
-            {Array(3)
-              .fill(3)
-              .map((item, index) => (
-                <div
-                  className="col-span-1 relative flex justify-center"
-                  key={index}
-                >
-                  <div className="cursor-pointer group relative flex flex-col my-6 border border-[#89474b] bg-white shadow rounded-lg w-96  ">
-                    <div className="relative h-50 m-2.5 overflow-hidden text-white rounded-md">
-                      <img
-                        className="transition-transform duration-500 ease-[cubic-bezier(0.25, 1, 0.5, 1)] transform group-hover:scale-110 w-full "
-                        src="assets/offer-online-image-1.png"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div className="py-3 px-2 rounded-lg shadow shadow-card bg-white border border-black absolute w-[300px] -bottom-5 ">
-                    {/* <h6 class="mb-2 text-slate-800 text-xl font-semibold">
-                        Successful Seed Round
-                      </h6> */}
-                    <p className="text-slate-600 leading-normal text-sm font-medium">
-                      We are thrilled to announce the completion of our seed
-                      round, securing $2M in investment to fuel product
-                      development and market expansion.
-                    </p>
+            {courses?.map((item, index) => (
+              <div
+                className="col-span-1 relative flex justify-center"
+                key={index}
+              >
+                <div className="cursor-pointer group relative flex flex-col my-6 border border-[#89474b] bg-white shadow rounded-lg w-96  ">
+                  <div className="relative h-50 m-2.5 overflow-hidden text-white rounded-md">
+                    <img
+                      className="transition-transform duration-500 ease-[cubic-bezier(0.25, 1, 0.5, 1)] transform group-hover:scale-110 w-full "
+                      src={item?.imgUrl}
+                      alt=""
+                    />
                   </div>
                 </div>
-              ))}
+                <div className="py-3 px-2 rounded-lg shadow shadow-card bg-white border border-black absolute w-[300px] -bottom-5 ">
+                  <p className="text-slate-600 leading-normal text-sm font-medium">
+                    {item?.description}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </Container>
       </div>
@@ -744,7 +528,7 @@ const Home = () => {
                               )
                             }
                           >
-                            <div className="flex items-center justify-between hover:text-secondaryLight w-full">
+                            <div className="flex items-center justify-between text-lightBlack hover:text-main w-full">
                               <span className="font-poppin text-sm sm:text-base font-medium w-[92%] lg:w-full ">
                                 {item.title}
                               </span>
