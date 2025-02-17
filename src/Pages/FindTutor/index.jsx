@@ -124,7 +124,7 @@ const FindTutor = () => {
                 placeholder="Type the Keyword"
                 onChange={(e) => setSearchTerm(e.target.value)}
                 value={searchTerm}
-                className=" border  bg-transparent placeholder:text-lightBlack border-main placeholder:font-medium focus:outline-none text-white  w-full backdrop-blur-xl shadow shadow-card  rounded-full py-4 pl-4 text-sm leading-[24px]"
+                className=" border  bg-transparent placeholder:text-lightBlack border-main placeholder:font-medium focus:outline-none text-black  w-full backdrop-blur-xl shadow shadow-card  rounded-full py-4 pl-4 text-sm leading-[24px]"
               />
             </div>
           </div>
