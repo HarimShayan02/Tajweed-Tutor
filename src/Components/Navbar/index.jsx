@@ -62,16 +62,16 @@ const Navbar = () => {
         className={`fixed  w-fit lg:w-full rounded-xl lg:rounded-[14px] top-2.5 max-w-[1200px] mr-[2px] sm:mr-0 md:px-3  py-[8px] flex z-40 items-center justify-end lg:justify-between bg-white  right-3 md:right-5 lg:right-auto left-auto lg:left-[50%] lg:translate-x-[-50%] lg:transistion-all lg:duration-500 lg:ease-in-out`}
         id="app-header"
       >
-        <a
+        <buttom
           className="transition-all duration-500 overflow-hidden w-[300px] logo-img "
-          href={"/"}
+          onClick={() => navigate("/")}
         >
           <img
             src="/assets/frame-logo.png"
             alt="logo"
             className="max-w-none object-contain .logo"
           />
-        </a>
+        </buttom>
         <div className="flex items-center text-black">
           <div className="hidden lg:flex items-center relative space-x-12 nav-wrapper">
             {homeNavData?.map((item, index) => (
