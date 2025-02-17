@@ -49,12 +49,12 @@ const Home = () => {
     {
       imgUrl: "/assets/hifz.png",
       description:
-        "Aimed at mastering Tajweed rules and improving Quranic recitation with one-on-one interactive sessions and personalized feedback.",
+        "A structured program for memorizing the Quran, guided by certified tutors with revision plans and regular assessments to track progress.",
     },
     {
       imgUrl: "/assets/tajweed.png",
       description:
-        "A structured program for memorizing the Quran, guided by certified tutors with revision plans and regular assessments to track progress.",
+        "Aimed at mastering Tajweed rules and improving Quranic recitation with one-on-one interactive sessions and personalized feedback.",
     },
   ];
 

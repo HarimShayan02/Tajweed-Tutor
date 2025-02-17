@@ -7,11 +7,11 @@ const Footar = () => {
       <div className="h-[150px] bg-white" />
       <div
         style={{
-          backgroundImage: "url(assets/header-banner-bg.png)",
+          backgroundImage: "url(/assets/header-banner-bg.png)",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
-        className="relative min-h-[340px] h-auto  flex justify-center "
+        className="relative min-h-[340px] h-auto flex justify-center "
       >
         <div className="absolute right-0 top-0">
           <img

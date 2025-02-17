@@ -5,6 +5,7 @@ import supabase from "../../supabase/supabaseClient";
 import { useGlobalContext } from "../../hook/Context";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
+import { Error, Success } from "../../Response/Response";
 
 const SignInModal = ({ isOpen, setIsModalOpen, title }) => {
   const { login } = useGlobalContext();
@@ -31,6 +32,7 @@ const SignInModal = ({ isOpen, setIsModalOpen, title }) => {
 
       if (error) {
         console.error("Supabase sign-up error:", error.message);
+        Error(error.message);
         return;
       }
 
@@ -43,7 +45,9 @@ const SignInModal = ({ isOpen, setIsModalOpen, title }) => {
         console.error("Supabase Profile error:", error.message);
         return;
       }
+
       login(profile[0]);
+      Success(`${profile[0]?.role} log in succesfully `);
       setIsModalOpen(false);
     } catch (error) {
       console.error("Unexpected error:", error);
@@ -82,6 +86,7 @@ const SignInModal = ({ isOpen, setIsModalOpen, title }) => {
                       className="block text-sm/6 font-medium text-gray-900"
                     >
                       Email address
+                      <span className="text-[#ff0000eb] ">*</span>
                     </label>
                     <div className="mt-2">
                       <input
@@ -99,6 +104,7 @@ const SignInModal = ({ isOpen, setIsModalOpen, title }) => {
                       className="block text-sm/6 font-medium text-gray-900"
                     >
                       Password
+                      <span className="text-[#ff0000eb] ">*</span>
                     </label>
                     <div className="mt-2 relative">
                       <input
@@ -119,8 +125,13 @@ const SignInModal = ({ isOpen, setIsModalOpen, title }) => {
                   <div className="w-full">
                     <Button
                       isPrimary
-                      className="!w-full py-2.5"
+                      className="!w-full py-2.5 disabled:cursor-not-allowed"
                       onClick={handleSubmit}
+                      disabled={
+                        !Object.values(user).every(
+                          (value) => value.trim() !== "",
+                        )
+                      }
                     >
                       Log in
                     </Button>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import Input from "../../Elements/Input";
 import Button from "../../Elements/Button";
@@ -6,6 +6,7 @@ import supabase from "../../supabase/supabaseClient";
 import { useGlobalContext } from "../../hook/Context";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
+import { Error, Success } from "../../Response/Response";
 
 const Signup = ({ isOpen, setIsModalOpen }) => {
   const { login } = useGlobalContext();
@@ -36,6 +37,7 @@ const Signup = ({ isOpen, setIsModalOpen }) => {
 
       if (authError) {
         console.error("Supabase sign-up error:", authError.message);
+        Error(authError?.message);
         return;
       }
       // Insert into the profile table
@@ -66,15 +68,26 @@ const Signup = ({ isOpen, setIsModalOpen }) => {
         console.error("Student insertion error:", studentError.message);
         return;
       }
-
+      Success(`Student created sucessfully`);
       login(profileData[0]);
       setIsModalOpen(false);
     } catch (error) {
       console.error("Unexpected error:", error);
     } finally {
-      console.log("Sign-up process complete.");
     }
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      setStudentDetail({
+        fullname: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        location: "",
+      });
+    }
+  }, [isOpen]);
 
   // const signUpAdmin = async (fields) => {
   //   try {
@@ -150,7 +163,10 @@ const Signup = ({ isOpen, setIsModalOpen }) => {
           </div>
 
           <div className=" px-3 pt-4 w-[65%] border border-black">
-            <label className="text-sm font-medium"> Full Name</label>
+            <label className="text-sm font-medium">
+              {" "}
+              Full Name <span className="text-[#ff0000eb] ">*</span>
+            </label>
             <Input
               type="text"
               placeholder="Full Name"
@@ -159,7 +175,10 @@ const Signup = ({ isOpen, setIsModalOpen }) => {
               value={studentDetail?.fullname}
               className="border border-[#837f76] bg-transparent  focus:outline-none  w-full rounded-md py-2 pl-3 text-sm leading-[24px] mb-4 mt-1"
             />
-            <label className="text-sm font-medium"> Email</label>
+            <label className="text-sm font-medium">
+              {" "}
+              Email <span className="text-[#ff0000eb] ">*</span>
+            </label>
             <Input
               type="text"
               name="email"
@@ -168,7 +187,9 @@ const Signup = ({ isOpen, setIsModalOpen }) => {
               value={studentDetail?.email}
               className="border border-[#837f76] bg-transparent  focus:outline-none   w-full rounded-md py-2 pl-3 text-sm leading-[24px] mb-4 mt-1"
             />
-            <label className="text-sm font-medium">Password</label>
+            <label className="text-sm font-medium">
+              Password <span className="text-[#ff0000eb] ">*</span>
+            </label>
             <div className="relative">
               <Input
                 type={isShowPassword ? "text" : "password"}
@@ -186,7 +207,9 @@ const Signup = ({ isOpen, setIsModalOpen }) => {
               </button>
             </div>
 
-            <label className="text-sm font-medium">Confirm Password</label>
+            <label className="text-sm font-medium">
+              Confirm Password <span className="text-[#ff0000eb] ">*</span>{" "}
+            </label>
             <div className="relative">
               <Input
                 type={isShowPassword ? "text" : "password"}
@@ -204,7 +227,9 @@ const Signup = ({ isOpen, setIsModalOpen }) => {
               </button>
             </div>
 
-            <label className="text-sm font-medium">Location</label>
+            <label className="text-sm font-medium">
+              Location <span className="text-[#ff0000eb] ">*</span>
+            </label>
             <Input
               type="text"
               name="location"
@@ -217,8 +242,13 @@ const Signup = ({ isOpen, setIsModalOpen }) => {
             <div className="w-full">
               <Button
                 isPrimary
-                className="h-[42px] w-full text-base px-5"
+                className="h-[42px] w-full text-base px-5 disabled:cursor-not-allowed"
                 onClick={handleClick}
+                disabled={
+                  !Object.values(studentDetail).every(
+                    (value) => value.trim() !== "",
+                  )
+                }
               >
                 Sign up
               </Button>

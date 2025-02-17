@@ -14,6 +14,7 @@ import {
   FaSearch,
   FaUserPlus,
 } from "react-icons/fa";
+import { Error, Success } from "../../Response/Response";
 
 const BecomeTutor = () => {
   const { login } = useGlobalContext();
@@ -47,6 +48,7 @@ const BecomeTutor = () => {
 
       if (tutorError) {
         console.error("Supabase sign-up error:", tutorError.message);
+        Error(tutorError.message);
         return;
       }
 
@@ -63,6 +65,7 @@ const BecomeTutor = () => {
         ])
         .select();
 
+      Success(`Tutor created sucessfully`);
       login(profile[0]);
       navigate(`/onBoarding/${tutor?.user?.id}/tutor`);
     } catch (error) {
@@ -250,7 +253,12 @@ const BecomeTutor = () => {
                   onClick={handleClick}
                   svgIcon={<ArrowRightIcon className="w-4 h-4" />}
                   isBackgroundLight
-                  className="h-[48px] min-w-[130px] text-base px-5"
+                  className="h-[48px] min-w-[130px] text-base px-5 disabled:cursor-not-allowed"
+                  disabled={
+                    !Object.values(tutorDetail).every(
+                      (value) => value.trim() !== "",
+                    )
+                  }
                 >
                   Sign up as Tutor
                 </Button>
@@ -259,9 +267,9 @@ const BecomeTutor = () => {
 
             <div className="col-span-1 h-full flex items-center justify-center">
               <img
-                src="/assets/tutorPage.png"
+                src="/assets/tutorpage.svg"
                 alt=""
-                className="object-cover rounded-md w-full h-[380px]"
+                className="object-cover rounded-md w-full h-[390px]"
               />
             </div>
           </div>

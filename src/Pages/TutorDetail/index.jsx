@@ -10,6 +10,7 @@ import supabase from "../../supabase/supabaseClient";
 import Button from "../../Elements/Button";
 import { useGlobalContext } from "../../hook/Context";
 import SignInModal from "../../Components/SignInModal";
+import { Error, Success } from "../../Response/Response";
 
 const TutorDetail = () => {
   const [isModalOpen, setisModalOpen] = useState(false);
@@ -59,7 +60,7 @@ const TutorDetail = () => {
 
       // Step 2: Check if the student is already in the array
       if (tutorData.students?.includes(user?.user_id)) {
-        console.log("Student is already booked with this tutor.");
+        Error("Student is already booked with this tutor.");
         return;
       }
 
@@ -76,8 +77,7 @@ const TutorDetail = () => {
         console.error("Error updating tutor data:", updateError.message);
         return;
       }
-
-      console.log("Tutor updated successfully:", updatedTutor);
+      Success("Session Sucessfully Schedule");
     } catch (error) {
       console.error("Unexpected error:", error);
     }

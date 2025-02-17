@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "../../Elements/Button";
 import supabase from "../../supabase/supabaseClient";
 import { useGlobalContext } from "../../hook/Context";
+import { Error, Success } from "../../Response/Response";
 
 const Admin = () => {
   const { login } = useGlobalContext();
@@ -27,6 +28,7 @@ const Admin = () => {
 
       if (error) {
         console.error("Supabase sign-up error:", error.message);
+        Error(error.message);
         return;
       }
 
@@ -40,8 +42,8 @@ const Admin = () => {
         return;
       }
 
-      console.log(profile[0]);
       login(profile[0]);
+      Success(`Admin log in succesfully`);
     } catch (error) {
       console.error("Unexpected error:", error);
     } finally {
@@ -84,6 +86,7 @@ const Admin = () => {
                   className="block text-sm/6 font-medium text-gray-900"
                 >
                   Email address
+                  <span className="text-[#ff0000eb] ">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -103,6 +106,7 @@ const Admin = () => {
                   className="block text-sm/6 font-medium text-gray-900"
                 >
                   Password
+                  <span className="text-[#ff0000eb] ">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -120,7 +124,10 @@ const Admin = () => {
                 <Button
                   onClick={handleSubmit}
                   isPrimary
-                  className="!w-full py-2"
+                  className="!w-full py-2 disabled:cursor-not-allowed"
+                  disabled={
+                    !Object.values(admin).every((value) => value.trim() !== "")
+                  }
                 >
                   Log in
                 </Button>
