@@ -7,6 +7,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import { v4 as uuidv4 } from "uuid";
 import { MdDeleteOutline } from "react-icons/md";
 import supabase from "../../supabase/supabaseClient";
+import { Success } from "../../Response/Response";
 
 const OnBoarding = () => {
   const { id, role } = useParams();
@@ -66,8 +67,8 @@ const OnBoarding = () => {
         return;
       }
 
+      Success("Registered Successfully");
       setTutorData(tutorProfile);
-
       navigate("/tutor-list");
     } catch (error) {
       console.error("Unexpected error:", error);

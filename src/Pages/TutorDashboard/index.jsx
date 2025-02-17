@@ -2,8 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../hook/Context";
 import supabase from "../../supabase/supabaseClient";
+import { FaRegUserCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const TutorDashboard = () => {
+  const navigate = useNavigate();
   const { user } = useGlobalContext();
   const [tutor, setTutor] = useState(null);
   const [matchedStudents, setMatchedStudents] = useState([]);
@@ -46,8 +49,6 @@ const TutorDashboard = () => {
     }
   };
 
-  console.log("Student:", matchedStudents);
-
   useEffect(() => {
     if (!user) return;
     getTutors();
@@ -59,44 +60,62 @@ const TutorDashboard = () => {
     }
   }, [tutor]);
 
+  useEffect(() => {
+    if (user === null) {
+      navigate("/");
+    }
+  }, [user]);
+
   return (
     <div className="min-h-[60vh]">
       <div className="mx-auto max-w-[1200px] pt-[7rem]">
         <h3 className="text-3xl font-bold tracking-wide text-black">
           Assigned Student
         </h3>
-        <div className="mt-10  border rounded-md border-lightBlack">
-          <div className="flex bg-main  items-center h-[80px] border-primary w-full  ">
-            <h3 className=" px-4 text-2xl tracking-wide font-semibold text-white ">
-              {user?.fullname}
-            </h3>
-          </div>
-          {matchedStudents?.map((student) => (
-            <div
-              key={student?.id}
-              className="p-4 border-b border-lightBlack flex justify-between items-center shadow-sm transition"
-            >
-              <div>
-                <h3 className="text-lg font-semibold text-black">
-                  {student.fullname}
-                </h3>
-                <p className="text-lightBlack">
-                  Tutor:{" "}
-                  <span className="font-medium text-main">
-                    {user?.fullname}
-                  </span>
-                </p>
-                {/* <p className="text-gray-500">Subject: {session.subject}</p>
-                <p className="text-gray-400 text-sm">{session.time}</p> */}
-              </div>
-              <span
-                className={`px-3 py-1 text-sm font-medium rounded-full bg-primary text-white`}
-              >
-                Scheduled
-              </span>
+        {matchedStudents?.length === 0 ? (
+          <div className="min-h-[200px] flex rounded-md justify-center items-center">
+            <div className="flex flex-col items-center justify-center gap-y-2">
+              <FaRegUserCircle size={40} />
+              <h3 className="font-medium text-lg text-black">
+                No Student is Schedule Yet
+              </h3>
             </div>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div className="mt-10  border rounded-md border-lightBlack">
+            <div className="flex bg-main  items-center h-[80px] border-primary w-full  ">
+              <h3 className=" px-4 text-2xl tracking-wide font-semibold text-white ">
+                {user?.fullname}
+              </h3>
+            </div>
+
+            {matchedStudents?.map((student) => (
+              <div
+                key={student?.id}
+                className="p-4 border-b border-lightBlack flex justify-between items-center shadow-sm transition"
+              >
+                <div>
+                  <h3 className="text-lg font-semibold text-black">
+                    {student.fullname}
+                  </h3>
+                  <p className="text-lightBlack">
+                    Tutor:{" "}
+                    <span className="font-medium text-main">
+                      {user?.fullname}
+                    </span>
+                  </p>
+                  {/* <p className="text-gray-500">Subject: {session.subject}</p>
+                <p className="text-gray-400 text-sm">{session.time}</p> */}
+                </div>
+                <span
+                  className={`px-3 py-1 text-sm font-medium rounded-full bg-primary text-white`}
+                >
+                  Scheduled
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

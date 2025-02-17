@@ -4,26 +4,26 @@ import React from "react";
 const AboutUs = () => {
   const people = [
     {
-      name: "Whitney Francis",
-      role: "Copywriter",
+      name: "Harim Shayan",
+      role: "Software Engineer",
       imageUrl:
-        "https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
       xUrl: "#",
       linkedinUrl: "#",
     },
     {
-      name: "Whitney Francis",
-      role: "Copywriter",
+      name: "Faiq Nadeem",
+      role: "Database Expert",
       imageUrl:
-        "https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
       xUrl: "#",
       linkedinUrl: "#",
     },
     {
-      name: "Whitney Francis",
-      role: "Copywriter",
+      name: "Munim Ahmed",
+      role: "Content Writer",
       imageUrl:
-        "https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
       xUrl: "#",
       linkedinUrl: "#",
     },

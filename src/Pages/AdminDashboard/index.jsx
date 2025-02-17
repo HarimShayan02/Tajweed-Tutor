@@ -37,7 +37,7 @@ const AdminDashboard = () => {
   const updateTutor = async (id) => {
     try {
       // Update the tutor's is_verified and is_approved fields
-      const { data: updatedTutor, error } = await supabase
+      const { error } = await supabase
         .from("tutors")
         .update({ is_verified: true, is_approved: true })
         .eq("id", id)
@@ -47,15 +47,7 @@ const AdminDashboard = () => {
         console.error("Error updating tutor:", error.message);
         return;
       }
-
-      // Update the tutors state to reflect the changes
-      setTutors((prevTutors) =>
-        prevTutors?.map((tutor) =>
-          tutor?.id === id
-            ? { ...tutor, is_verified: true, is_approved: true }
-            : tutor,
-        ),
-      );
+      setTutors((prevTutors) => prevTutors.filter((tutor) => tutor.id !== id));
     } catch (error) {
       console.error("Unexpected error:", error);
     }
@@ -75,16 +67,20 @@ const AdminDashboard = () => {
             <div className="flex h-20 justify-between">
               <div className="flex">
                 <div className="flex shrink-0 items-center">
-                  <img
-                    alt="Your Company"
-                    src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                    className="block h-8 w-auto lg:hidden"
-                  />
-                  <img
-                    alt="Your Company"
-                    src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                    className="hidden h-8 w-auto lg:block"
-                  />
+                  <button onClick={() => navigate("/")}>
+                    <img
+                      alt="Your Company"
+                      src="/assets/frame-logo.png"
+                      className="block h-20 w-[300px] lg:hidden"
+                    />
+                  </button>
+                  <button onClick={() => navigate("/")}>
+                    <img
+                      alt="Your Company"
+                      src="/assets/frame-logo.png"
+                      className="hidden h-8 w-auto lg:block"
+                    />
+                  </button>
                 </div>
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:items-center">
